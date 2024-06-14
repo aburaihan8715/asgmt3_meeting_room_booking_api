@@ -17,7 +17,7 @@ router
 router
   .route('/:id')
   .get(RoomControllers.getRoom)
-  .put(RoomControllers.updateRoom)
-  .delete(RoomControllers.deleteRoom);
+  .put(auth(USER_ROLE.admin), RoomControllers.updateRoom)
+  .delete(auth(USER_ROLE.admin), RoomControllers.deleteRoom);
 
 export const RoomRoutes = router;
