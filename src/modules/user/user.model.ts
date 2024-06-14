@@ -1,5 +1,8 @@
+import bcrypt from 'bcrypt';
 import { Schema, model } from 'mongoose';
-import { TUser } from './user.interface';
+
+import { IUser, UserModel } from './user.interface';
+import config from '../../config';
 
 const userSchema = new Schema(
   {
@@ -16,6 +19,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: [true, 'Password is required'],
+      select: false,
     },
     phone: {
       type: String,
@@ -26,6 +30,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: ['user', 'admin'],
+      default: 'user',
     },
   },
   {
@@ -33,4 +38,27 @@ const userSchema = new Schema(
   },
 );
 
-export const User = model<TUser>('User', userSchema);
+// DOCUMENT MIDDLEWARE
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password') || this.isNew) {
+    this.password = await bcrypt.hash(
+      this.password,
+      Number(config.bcrypt_salt_rounds),
+    );
+  }
+  next();
+});
+
+// STATICS METHODS
+userSchema.statics.isUserExists = async function (email: string) {
+  return await User.findOne({ email }).select('+password');
+};
+
+userSchema.statics.isPasswordCorrect = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
+
+export const User = model<IUser, UserModel>('User', userSchema);

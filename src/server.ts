@@ -5,7 +5,7 @@ import config from './config';
 async function main() {
   try {
     const { ConnectionStates } = await mongoose.connect(
-      config.db_url_local as string,
+      config.db_url_atlas as string,
     );
 
     if (ConnectionStates.connected) {
