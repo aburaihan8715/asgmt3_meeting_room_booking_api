@@ -3,6 +3,7 @@ import { UserRoutes } from './modules/user/user.route';
 import globalErrorHandler from './middlewares/globalErrorHandler';
 import { RoomRoutes } from './modules/room/room.route';
 import notFoundRouteHandler from './middlewares/notFoundRouteHandler';
+import { SlotRoutes } from './modules/slot/slot.route';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 // ROUTES
 app.use('/api/auth', UserRoutes);
 app.use('/api/rooms', RoomRoutes);
+app.use('/api/slots', SlotRoutes);
 
 // NOT FOUND ROUTE HANDLER
 app.use(notFoundRouteHandler);
