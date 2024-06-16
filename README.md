@@ -1,8 +1,14 @@
 # Project : asgmt3_meeting_room_booking_api
 
-## Live link: link have to add
+## Live link:
 
-## Github link: link have to add
+https://meeting-room-booking-8qc1ki5yv-aburaihan.vercel.app/
+
+## Github link:
+
+https://github.com/aburaihan8715/asgmt3_meeting_room_booking_api
+
+## Overview video link:
 
 ## Admin
 
@@ -33,31 +39,31 @@
 
 ## User:
 
-- /api/auth/signup(POST)
-- /api/auth/login(POST)
+- /api/auth/signup(POST) -public
+- /api/auth/login(POST) -public
 
 ## Room:
 
-- /api/rooms(POST)
-- /api/rooms(GET)
-- /api/rooms/:id(GET)
-- /api/rooms/:id(PUT)
-- /api/rooms/:id(DELETE)
+- /api/rooms(POST) -private for admin
+- /api/rooms(GET) -public
+- /api/rooms/:id(GET) -public
+- /api/rooms/:id(PUT) -private for admin
+- /api/rooms/:id(DELETE) -private for admin
 
 ## Slot:
 
-- /api/slots(POST)
-- /api/slots/availability(GET)
+- /api/slots(POST) -private for admin
+- /api/slots/availability(GET) -public
   OR
 - /api/slots/availability?date=2024-06-15&roomId=60d9c4e4f3b4(GET)
 
 ## Booking:
 
-- /api/bookings (POST)
-- /api/bookings (GET)
-- /api/my-bookings(GET)
-- /api/bookings/:id (PUT)
-- /api/bookings/:id (DELETE)
+- /api/bookings (POST) -private for logged in users
+- /api/bookings (GET) -public
+- /api/my-bookings(GET) -private for logged in users
+- /api/bookings/:id (PUT) -private for admin
+- /api/bookings/:id (DELETE) -private for admin
 
 ## Scripts
 
@@ -72,20 +78,3 @@
 ```
 
 <p>======end=======</p>
-
-"devDependencies": {
-"@eslint/js": "^9.4.0",
-"@types/cookie-parser": "^1.4.7",
-"@types/cors": "^2.8.17",
-"@types/express": "^4.17.21",
-"@types/node": "^20.14.2",
-"@typescript-eslint/eslint-plugin": "^7.13.0",
-"@typescript-eslint/parser": "^7.13.0",
-"eslint": "^9.4.0",
-"eslint-config-prettier": "^9.1.0",
-"globals": "^15.4.0",
-"prettier": "^3.3.2",
-"ts-node-dev": "^2.0.0",
-"typescript": "^5.4.5",
-"typescript-eslint": "^7.13.0"
-}
