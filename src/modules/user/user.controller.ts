@@ -7,7 +7,8 @@ import sendNotFoundDataResponse from '../../utils/sendNotFoundDataResponse';
 // SIGNUP
 const signUpUser = catchAsync(async (req: Request, res: Response) => {
   const newUser = await UserServices.signUpUserIntoDB(req.body);
-  const { password, ...restData } = newUser.toObject();
+  const restData = newUser.toObject();
+  delete restData.password;
 
   res.status(200).json({
     success: true,

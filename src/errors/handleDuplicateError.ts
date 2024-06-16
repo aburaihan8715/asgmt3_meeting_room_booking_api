@@ -1,7 +1,12 @@
 import { TErrorSources, TGenericErrorResponse } from '../interface/error';
 
-const handleDuplicateError = (err: any): TGenericErrorResponse => {
-  const message = err.message;
+interface IDuplicateError extends Error {
+  code?: number;
+  keyValue?: Record<string, string>;
+}
+
+const handleDuplicateError = (err: IDuplicateError): TGenericErrorResponse => {
+  const message = err.message || 'Duplicate key error';
   const statusCode = 400;
   const errorMessages: TErrorSources = [
     {

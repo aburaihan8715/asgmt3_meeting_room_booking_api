@@ -12,7 +12,7 @@ const createBookingIntoDB = async (payload: TBooking) => {
   // 02 Calculate total amount based on pricePerSlot and number of slots
   const totalAmount = room.pricePerSlot * payload.slots.length;
 
-  let result = await Booking.create({ ...payload, totalAmount });
+  const result = await Booking.create({ ...payload, totalAmount });
 
   const populatedResult = await Booking.findById(result._id)
     .populate('room')

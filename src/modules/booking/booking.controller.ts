@@ -87,7 +87,7 @@ const deleteBooking = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     statusCode: 200,
-    message: 'Available slots retrieved successfully!',
+    message: 'Booking deleted successfully!',
     data: deletedBooking,
   });
 });
