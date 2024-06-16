@@ -70,3 +70,5 @@
 "prettier": "prettier --ignore-path .gitignore --write \"./src/\*\*/\*.+(js|ts|json)\"",
 "prettier:fix": "npx prettier --write src"
 ```
+
+<p>======end=======</p>
