@@ -1,39 +1,36 @@
 import { TSlot } from './slot.interface';
 import { Slot } from './slot.model';
+import { minutesToTimeString, timeStringToMinutes } from './slot.utils';
 
 // CREATE
 const createSlotIntoDB = async (payload: TSlot) => {
   const { room, date, startTime, endTime } = payload;
+  const slotDuration = 60;
+  const statTimeInMinutes = timeStringToMinutes(startTime);
+  const endTimeInMinutes = timeStringToMinutes(endTime);
 
-  const createHourlySlots = async (start: string, end: string) => {
-    const slots = [];
-    let current = new Date(`${date}T${start}`);
-    const endTime = new Date(`${date}T${end}`);
+  const totalTime = endTimeInMinutes - statTimeInMinutes;
+  const numberOfSlots = Number(totalTime / slotDuration);
 
-    while (current < endTime) {
-      const next = new Date(current);
-      next.setHours(current.getHours() + 1);
+  let slots = [];
 
-      if (next > endTime) break;
+  for (let i = 0; i < numberOfSlots; i++) {
+    const slotStartMinutes = statTimeInMinutes + i * slotDuration;
+    const endTimeInMinutes = slotStartMinutes + slotDuration;
 
-      slots.push({
-        room: room,
-        date: new Date(date).toISOString().split('T')[0],
-        startTime: current.toTimeString().slice(0, 5),
-        endTime: next.toTimeString().slice(0, 5),
-        isBooked: false,
-      });
+    const slotStartTimeString = minutesToTimeString(slotStartMinutes);
+    const slotEndTimeString = minutesToTimeString(endTimeInMinutes);
 
-      current = next;
-    }
+    slots.push({
+      room,
+      date,
+      startTime: slotStartTimeString,
+      endTime: slotEndTimeString,
+      isBooked: false,
+    });
+  }
 
-    return slots;
-  };
-
-  const slotsData = await createHourlySlots(startTime, endTime);
-
-  const result = await Slot.insertMany(slotsData);
-
+  const result = await Slot.insertMany(slots);
   return result;
 };
 

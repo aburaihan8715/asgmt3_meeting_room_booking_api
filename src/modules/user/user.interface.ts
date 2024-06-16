@@ -1,7 +1,8 @@
 import { Model } from 'mongoose';
 import { USER_ROLE } from './user.constant';
+import { Document } from 'mongoose';
 
-export interface IUser {
+export interface IUser extends Document {
   _id: string;
   name: string;
   email: string;

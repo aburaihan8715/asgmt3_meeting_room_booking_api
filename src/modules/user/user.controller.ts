@@ -2,19 +2,27 @@ import { Request, Response } from 'express';
 import catchAsync from '../../utils/catchAsync';
 import { UserServices } from './user.service';
 import config from '../../config';
-import sendNotFoundDataResponse from '../../utils/sendNotFoundDataResponse';
+import AppError from '../../errors/AppError';
+import httpStatus from 'http-status';
 
 // SIGNUP
 const signUpUser = catchAsync(async (req: Request, res: Response) => {
   const newUser = await UserServices.signUpUserIntoDB(req.body);
-  const restData = newUser.toObject();
-  delete restData.password;
+
+  if (!newUser) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Failed to cerate user. Try again!',
+    );
+  }
+  const user = newUser.toObject();
+  delete user.password;
 
   res.status(200).json({
     success: true,
     statusCode: 200,
     message: 'User registered successfully',
-    data: restData,
+    data: user,
   });
 });
 
@@ -22,7 +30,8 @@ const signUpUser = catchAsync(async (req: Request, res: Response) => {
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const userInfo = await UserServices.loginUserFromDB(req.body);
 
-  if (!userInfo) return sendNotFoundDataResponse(res);
+  if (!userInfo)
+    throw new AppError(httpStatus.NOT_FOUND, 'Failed to login! Try again!');
 
   const { refreshToken, accessToken, user } = userInfo;
 
@@ -31,12 +40,15 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     httpOnly: true,
   });
 
+  const userObject = user.toObject();
+  delete userObject.password;
+
   res.status(200).json({
     success: true,
     statusCode: 200,
     message: 'User logged in successfully',
     accessToken,
-    data: user,
+    data: userObject,
   });
 });
 
