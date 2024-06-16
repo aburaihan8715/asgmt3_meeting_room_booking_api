@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import catchAsync from '../../utils/catchAsync';
 import { RoomServices } from './room.service';
+import sendNotFoundDataResponse from '../../utils/sendNotFoundDataResponse';
 
 // CREATE
 const createRoom = catchAsync(async (req: Request, res: Response) => {
@@ -16,6 +17,9 @@ const createRoom = catchAsync(async (req: Request, res: Response) => {
 // GET ALL
 const getAllRooms = catchAsync(async (req: Request, res: Response) => {
   const rooms = await RoomServices.getAllRoomsFromDB();
+
+  if (!rooms || rooms.length < 1) return sendNotFoundDataResponse(res);
+
   res.status(200).json({
     success: true,
     statusCode: 200,
@@ -27,6 +31,9 @@ const getAllRooms = catchAsync(async (req: Request, res: Response) => {
 // GET ONE
 const getRoom = catchAsync(async (req: Request, res: Response) => {
   const room = await RoomServices.getRoomFromDB(req.params.id);
+
+  if (!room) return sendNotFoundDataResponse(res);
+
   res.status(200).json({
     success: true,
     statusCode: 200,
@@ -41,6 +48,8 @@ const updateRoom = catchAsync(async (req: Request, res: Response) => {
     req.params.id,
     req.body,
   );
+  if (!updatedRoom) return sendNotFoundDataResponse(res);
+
   res.status(200).json({
     success: true,
     statusCode: 200,
@@ -52,6 +61,9 @@ const updateRoom = catchAsync(async (req: Request, res: Response) => {
 // DELETE ONE
 const deleteRoom = catchAsync(async (req: Request, res: Response) => {
   const deletedRoom = await RoomServices.deleteRoomIntoDB(req.params.id);
+
+  if (!deletedRoom) return sendNotFoundDataResponse(res);
+
   res.status(200).json({
     success: true,
     statusCode: 200,

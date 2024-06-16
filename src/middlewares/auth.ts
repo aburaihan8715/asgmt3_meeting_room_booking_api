@@ -5,7 +5,6 @@ import catchAsync from '../utils/catchAsync';
 import config from '../config';
 import { User } from '../modules/user/user.model';
 import sendUnauthenticatedResponse from '../utils/sendUnauthenticatedResponse';
-import sendNotFoundDataResponse from '../utils/sendNotFoundDataResponse';
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -26,11 +25,11 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    const { role, email } = decoded;
+    const { role, id } = decoded;
 
     // 03 check user still exists
-    const user = await User.isUserExists(email);
-    if (!user) return sendNotFoundDataResponse(res);
+    const user = await User.isUserExistsById(id);
+    if (!user) return sendUnauthenticatedResponse(res);
 
     // 04 check authorization if needed
     if (requiredRoles && !requiredRoles.includes(role)) {

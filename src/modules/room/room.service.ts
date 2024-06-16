@@ -21,21 +21,15 @@ const getRoomFromDB = async (id: string) => {
 
 // UPDATE ONE
 const updateRoomIntoDB = async (id: string, payload: Partial<TRoom>) => {
-  const { amenities, ...primitivesData } = payload;
-
-  const modifiedUpdatedData: Record<string, unknown> = {
-    ...primitivesData,
-  };
-
-  if (amenities && Object.keys(amenities).length) {
-    for (const [key, value] of Object.entries(amenities)) {
-      modifiedUpdatedData[`amenities.${key}`] = value;
-    }
-  }
-
-  const result = await Room.findByIdAndUpdate(id, modifiedUpdatedData, {
-    new: true,
-  });
+  const result = await Room.findByIdAndUpdate(
+    id,
+    {
+      ...payload,
+    },
+    {
+      new: true,
+    },
+  );
   return result;
 };
 

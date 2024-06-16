@@ -10,7 +10,7 @@ const signUpUserIntoDB = async (payload: IUser) => {
 };
 const loginUserFromDB = async (payload: TLoginUser) => {
   // 01. checking if the user is exist
-  const user = await User.isUserExists(payload.email);
+  const user = await User.isUserExistsByEmail(payload.email);
   if (!user) return null;
 
   // 02. checking if the password is correct
@@ -22,7 +22,7 @@ const loginUserFromDB = async (payload: TLoginUser) => {
 
   // 03. create token and sent to the  client
   const jwtPayload = {
-    email: user.email,
+    id: user._id,
     role: user.role as string,
   };
 

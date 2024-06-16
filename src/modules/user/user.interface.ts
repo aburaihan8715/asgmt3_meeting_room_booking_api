@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 import { USER_ROLE } from './user.constant';
 
 export interface IUser {
+  _id: string;
   name: string;
   email: string;
   password?: undefined | string;
@@ -16,7 +17,8 @@ export type TLoginUser = {
 };
 
 export interface UserModel extends Model<IUser> {
-  isUserExists(email: string): Promise<IUser>;
+  isUserExistsById(id: string): Promise<IUser>;
+  isUserExistsByEmail(email: string): Promise<IUser>;
   isPasswordCorrect(
     plainTextPassword: string,
     hashedPassword: string,
