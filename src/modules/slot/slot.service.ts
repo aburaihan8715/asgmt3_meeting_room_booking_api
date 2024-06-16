@@ -12,7 +12,7 @@ const createSlotIntoDB = async (payload: TSlot) => {
   const totalTime = endTimeInMinutes - statTimeInMinutes;
   const numberOfSlots = Number(totalTime / slotDuration);
 
-  let slots = [];
+  const slots = [];
 
   for (let i = 0; i < numberOfSlots; i++) {
     const slotStartMinutes = statTimeInMinutes + i * slotDuration;
