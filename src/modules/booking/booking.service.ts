@@ -1,7 +1,9 @@
+import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { Room } from '../room/room.model';
 import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
+import { Slot } from '../slot/slot.model';
 
 // CREATE
 const createBookingIntoDB = async (payload: TBooking) => {
@@ -25,7 +27,7 @@ const createBookingIntoDB = async (payload: TBooking) => {
 
 // GET ALL
 const getAllBookingsFromDB = async () => {
-  const result = await Booking.find()
+  const result = await Booking.find({ isDeleted: { $ne: true } })
     .populate('room')
     .populate('slots')
     .populate('user')
@@ -35,7 +37,10 @@ const getAllBookingsFromDB = async () => {
 
 // GET MY BOOKINGS
 const getMyBookingsFromDB = async (id: string) => {
-  const result = await Booking.find({ user: id }, { user: 0 })
+  const result = await Booking.find(
+    { user: id, isDeleted: { $ne: true } },
+    { user: 0 },
+  )
     .populate('room')
     .populate('slots');
   return result;
@@ -53,6 +58,16 @@ const updateBookingInDB = async (id: string, payload: Partial<TBooking>) => {
     },
   );
 
+  if (result && result.isConfirmed === 'confirmed') {
+    const confirmedBookingIds = result.slots;
+    confirmedBookingIds.forEach(async (id) => {
+      await Slot.findByIdAndUpdate(id, { isBooked: true }, { new: true });
+    });
+  }
+
+  if (result && result.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'This booking already deleted!');
+  }
   return result;
 };
 

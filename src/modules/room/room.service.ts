@@ -1,3 +1,5 @@
+import httpStatus from 'http-status';
+import AppError from '../../errors/AppError';
 import { TRoom } from './room.interface';
 import { Room } from './room.model';
 
@@ -9,13 +11,17 @@ const createRoomIntoDB = async (payload: TRoom) => {
 
 // GET ALL
 const getAllRoomsFromDB = async () => {
-  const result = await Room.find({});
+  const result = await Room.find({ isDeleted: { $ne: true } });
   return result;
 };
 
 // GET ONE
 const getRoomFromDB = async (id: string) => {
   const result = await Room.findById(id);
+
+  if (result && result.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Room has been deleted!');
+  }
   return result;
 };
 
@@ -30,6 +36,10 @@ const updateRoomIntoDB = async (id: string, payload: Partial<TRoom>) => {
       new: true,
     },
   );
+
+  if (result && result.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Room has been deleted!');
+  }
   return result;
 };
 

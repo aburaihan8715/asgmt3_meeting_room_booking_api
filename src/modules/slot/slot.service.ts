@@ -37,6 +37,7 @@ const createSlotIntoDB = async (payload: TSlot) => {
 // GET ALL
 const getAllSlotsFromDB = async (queryObj: Record<string, unknown>) => {
   let filter: Record<string, unknown> = { isBooked: { $ne: true } };
+  // console.log(filter);
 
   if (queryObj && queryObj.date && queryObj.roomId) {
     filter = { date: queryObj.date, room: queryObj.roomId, isBooked: false };

@@ -25,7 +25,10 @@ const roomSchema = new Schema({
     required: [true, 'Price per slot is required'],
   },
   amenities: [String],
-  isDeleted: Boolean,
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const Room = model<TRoom>('Room', roomSchema);

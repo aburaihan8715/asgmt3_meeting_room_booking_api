@@ -19,7 +19,7 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     statusCode: 200,
-    message: 'Booking created successfully',
+    message: 'Booking created successfully !',
     data: newBooking,
   });
 });
@@ -70,7 +70,7 @@ const updateBooking = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     statusCode: 200,
-    message: 'Booking updated successfully"!',
+    message: 'Booking updated successfully!',
     data: updatedBooking,
   });
 });

@@ -33,7 +33,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   if (!userInfo)
     throw new AppError(httpStatus.NOT_FOUND, 'Failed to login! Try again!');
 
-  const { refreshToken, accessToken, user } = userInfo;
+  const { refreshToken, token, user } = userInfo;
 
   res.cookie('refreshToken', refreshToken, {
     secure: config.NODE_ENV === 'production',
@@ -47,7 +47,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     success: true,
     statusCode: 200,
     message: 'User logged in successfully',
-    accessToken,
+    token,
     data: userObject,
   });
 });
