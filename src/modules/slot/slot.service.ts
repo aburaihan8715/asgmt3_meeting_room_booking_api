@@ -1,6 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status';
+
+import AppError from '../../errors/AppError';
 import { TSlot } from './slot.interface';
 import { Slot } from './slot.model';
 import { minutesToTimeString, timeStringToMinutes } from './slot.utils';
+
+type TQueryObject = {
+  date?: string;
+  roomId?: string;
+};
+type TFilter = Record<string, unknown>;
+// type TSortedResult = Record<string, unknown>[];
 
 // CREATE
 const createSlotIntoDB = async (payload: TSlot) => {
@@ -35,15 +46,25 @@ const createSlotIntoDB = async (payload: TSlot) => {
 };
 
 // GET ALL
-const getAllSlotsFromDB = async (queryObj: Record<string, unknown>) => {
-  let filter: Record<string, unknown> = { isBooked: { $ne: true } };
+const getAllSlotsFromDB = async (queryObj: TQueryObject) => {
+  let filter: TFilter = { isBooked: { $ne: true } };
   // console.log(filter);
 
   if (queryObj && queryObj.date && queryObj.roomId) {
     filter = { date: queryObj.date, room: queryObj.roomId, isBooked: false };
   }
-  const result = await Slot.find(filter).populate('room');
-  return result;
+  const result = await Slot.find(filter).populate('room').exec();
+  let sortedResult: any = [];
+
+  if (result && result.length > 0) {
+    sortedResult = result.filter((item) => !(item.room as any)?.isDeleted);
+  }
+
+  if (sortedResult.length <= 1) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'There are no available slots!');
+  }
+
+  return sortedResult;
 };
 
 export const SlotServices = {
