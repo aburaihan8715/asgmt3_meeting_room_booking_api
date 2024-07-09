@@ -35,4 +35,8 @@
     "tseslint",
     "virtuals"
   ],
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#2403b4",
+    "statusBar.foreground": "#edeaf0",
+  }
 }
