@@ -1,7 +1,2 @@
 // NOTE: 
 
-// pending
-1. video making
-2. readme file update
-3. deployment
-4. slot modify

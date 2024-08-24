@@ -47,15 +47,14 @@ const getMyBookingsFromDB = async (id: string) => {
 };
 
 // UPDATE
-const updateBookingInDB = async (id: string, payload: Partial<TBooking>) => {
+const updateBookingInDB = async (
+  id: string,
+  payload: Partial<TBooking>,
+) => {
   const result = await Booking.findByIdAndUpdate(
     id,
-    {
-      ...payload,
-    },
-    {
-      new: true,
-    },
+    { ...payload },
+    { new: true },
   );
 
   if (result && result.isConfirmed === 'confirmed') {
@@ -66,7 +65,10 @@ const updateBookingInDB = async (id: string, payload: Partial<TBooking>) => {
   }
 
   if (result && result.isDeleted) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'This booking already deleted!');
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'This booking already deleted!',
+    );
   }
   return result;
 };
