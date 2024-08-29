@@ -8,6 +8,7 @@ import { minutesToTimeString, timeStringToMinutes } from './slot.utils';
 import QueryBuilder from '../../builder/QueryBuilder';
 
 // CREATE
+
 const createSlotIntoDB = async (payload: TSlot) => {
   const { room, date, startTime, endTime } = payload;
   const slotDuration = 60;
@@ -47,44 +48,14 @@ const createSlotIntoDB = async (payload: TSlot) => {
 };
 
 // GET ALL
-/*
-const getAllSlotsFromDB = async (queryObj: TQueryObject) => {
-  let filter: TFilter = { isBooked: { $ne: true } };
-
-  if (queryObj && queryObj.date && queryObj.roomId) {
-    filter = {
-      date: queryObj.date,
-      room: queryObj.roomId,
-      isBooked: false,
-    };
-  }
-  const result = await Slot.find(filter).populate('room').exec();
-  let sortedResult: any = [];
-
-  if (result && result.length > 0) {
-    sortedResult = result.filter((item) => !(item.room as any)?.isDeleted);
-  }
-
-  if (sortedResult.length <= 1) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'There are no available slots!',
-    );
-  }
-
-  return sortedResult;
-};
-*/
-
 const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
-  // Use an index signature to allow dynamic properties
   let filter: { [key: string]: unknown } = { isBooked: { $ne: true } };
 
-  if (query && query.date && query.roomId) {
+  if (query && query.date && query.room) {
     filter = {
-      ...filter, // Spread the existing filter properties
+      ...filter,
       date: query.date,
-      room: query.roomId,
+      room: query.room,
     };
   }
 
@@ -93,7 +64,7 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
     Slot.find(filter).populate('room'),
     query,
   )
-    .search([]) // If you have searchable fields, pass them here
+    .search([]) // Add searchable fields if needed
     .filter()
     .sort()
     .paginate()
