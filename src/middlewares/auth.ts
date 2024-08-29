@@ -7,41 +7,43 @@ import { User } from '../modules/user/user.model';
 import sendUnauthenticatedResponse from '../utils/sendUnauthenticatedResponse';
 
 const auth = (...requiredRoles: TUserRole[]) => {
-  return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    // 01 check token
-    let token = '';
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
-    ) {
-      token = req.headers.authorization.split(' ')[1];
-    }
+  return catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      // 01 check token
+      let token = '';
+      if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+      ) {
+        token = req.headers.authorization.split(' ')[1];
+      }
 
-    if (!token) return sendUnauthenticatedResponse(res);
+      if (!token) return sendUnauthenticatedResponse(res);
 
-    // 02 verify the token
-    const decoded = jwt.verify(
-      token,
-      config.jwt_access_secret as string,
-    ) as JwtPayload;
+      // 02 verify the token
+      const decoded = jwt.verify(
+        token,
+        config.jwt_access_secret as string,
+      ) as JwtPayload;
 
-    const { role, id } = decoded;
+      const { role, id } = decoded;
 
-    // 03 check user still exists
-    const user = await User.isUserExistsById(id);
-    if (!user) return sendUnauthenticatedResponse(res);
+      // 03 check user still exists
+      const user = await User.isUserExistsById(id);
+      if (!user) return sendUnauthenticatedResponse(res);
 
-    // 04 check authorization if needed
-    if (requiredRoles && !requiredRoles.includes(role)) {
-      return sendUnauthenticatedResponse(res);
-    }
+      // 04 check authorization if needed
+      if (requiredRoles && !requiredRoles.includes(role)) {
+        return sendUnauthenticatedResponse(res);
+      }
 
-    // 05 set user in the request
-    req.user = decoded as JwtPayload;
+      // 05 set user in the request
+      req.user = decoded as JwtPayload;
 
-    // 06 grand access the user!!
-    next();
-  });
+      // 06 grand access the user!!
+      next();
+    },
+  );
 };
 
 export default auth;

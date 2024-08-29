@@ -11,7 +11,6 @@ type TQueryObject = {
   roomId?: string;
 };
 type TFilter = Record<string, unknown>;
-// type TSortedResult = Record<string, unknown>[];
 
 // CREATE
 const createSlotIntoDB = async (payload: TSlot) => {
@@ -41,8 +40,15 @@ const createSlotIntoDB = async (payload: TSlot) => {
     });
   }
 
-  const result = await Slot.insertMany(slots);
-  return result;
+  const newSlot = await Slot.insertMany(slots);
+
+  if (!newSlot || newSlot.length < 1) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Failed to cerate new slot!',
+    );
+  }
+  return newSlot;
 };
 
 // GET ALL
@@ -51,7 +57,11 @@ const getAllSlotsFromDB = async (queryObj: TQueryObject) => {
   // console.log(filter);
 
   if (queryObj && queryObj.date && queryObj.roomId) {
-    filter = { date: queryObj.date, room: queryObj.roomId, isBooked: false };
+    filter = {
+      date: queryObj.date,
+      room: queryObj.roomId,
+      isBooked: false,
+    };
   }
   const result = await Slot.find(filter).populate('room').exec();
   let sortedResult: any = [];
@@ -61,7 +71,10 @@ const getAllSlotsFromDB = async (queryObj: TQueryObject) => {
   }
 
   if (sortedResult.length <= 1) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'There are no available slots!');
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'There are no available slots!',
+    );
   }
 
   return sortedResult;

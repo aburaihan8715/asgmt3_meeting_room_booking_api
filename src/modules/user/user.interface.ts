@@ -12,11 +12,6 @@ export interface IUser extends Document {
   role?: 'user' | 'admin';
 }
 
-export type TLoginUser = {
-  email: string;
-  password: string;
-};
-
 export interface UserModel extends Model<IUser> {
   isUserExistsById(id: string): Promise<IUser>;
   isUserExistsByEmail(email: string): Promise<IUser>;

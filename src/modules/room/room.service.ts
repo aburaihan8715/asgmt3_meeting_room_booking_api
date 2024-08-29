@@ -5,8 +5,15 @@ import { Room } from './room.model';
 
 // CREATE
 const createRoomIntoDB = async (payload: TRoom) => {
-  const result = await Room.create(payload);
-  return result;
+  const newRoom = await Room.create(payload);
+
+  if (!newRoom) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Failed to creating new room!',
+    );
+  }
+  return newRoom;
 };
 
 // GET ALL
@@ -19,6 +26,10 @@ const getAllRoomsFromDB = async () => {
 const getRoomFromDB = async (id: string) => {
   const result = await Room.findById(id);
 
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Room not found !');
+  }
+
   if (result && result.isDeleted) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Room has been deleted!');
   }
@@ -29,13 +40,13 @@ const getRoomFromDB = async (id: string) => {
 const updateRoomIntoDB = async (id: string, payload: Partial<TRoom>) => {
   const result = await Room.findByIdAndUpdate(
     id,
-    {
-      ...payload,
-    },
-    {
-      new: true,
-    },
+    { ...payload },
+    { new: true },
   );
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Room not found !');
+  }
 
   if (result && result.isDeleted) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Room has been deleted!');
@@ -50,6 +61,11 @@ const deleteRoomIntoDB = async (id: string) => {
     { isDeleted: true },
     { new: true },
   );
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Room not found !');
+  }
+
   return result;
 };
 
