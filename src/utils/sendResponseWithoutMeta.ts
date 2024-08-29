@@ -1,25 +1,25 @@
 import { Response } from 'express';
 
-type TMeta = {
-  limit: number;
-  page: number;
-  total: number;
-  totalPage: number;
-};
-
 type TResponse<T> = {
   statusCode: number;
   success: boolean;
   message?: string;
-  meta?: TMeta;
   data: T;
 };
 
 const sendResponse = <T>(res: Response, data: TResponse<T>) => {
+  let result: number | null;
+  if (Array.isArray(data.data)) {
+    result = data.data.length;
+  } else if (typeof data.data === 'object' && data.data !== null) {
+    result = 1;
+  } else {
+    result = null;
+  }
   res.status(data?.statusCode).json({
     success: data.success,
+    result,
     message: data.message,
-    meta: data.meta,
     data: data.data,
   });
 };

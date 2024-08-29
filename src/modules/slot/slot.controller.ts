@@ -19,15 +19,17 @@ const createSlot = catchAsync(async (req: Request, res: Response) => {
 
 // GET ALL
 const getAllSlots = catchAsync(async (req: Request, res: Response) => {
-  const slots = await SlotServices.getAllSlotsFromDB(req.query);
+  const result = await SlotServices.getAllSlotsFromDB(req.query);
 
-  if (!slots || slots.length < 1) return sendNotFoundDataResponse(res);
+  if (!result || result.result.length < 1)
+    return sendNotFoundDataResponse(res);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Available slots retrieved successfully!',
-    data: slots,
+    meta: result.meta,
+    data: result.result,
   });
 });
 

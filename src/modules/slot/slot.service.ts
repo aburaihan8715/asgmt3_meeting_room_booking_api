@@ -5,12 +5,7 @@ import AppError from '../../errors/AppError';
 import { TSlot } from './slot.interface';
 import { Slot } from './slot.model';
 import { minutesToTimeString, timeStringToMinutes } from './slot.utils';
-
-type TQueryObject = {
-  date?: string;
-  roomId?: string;
-};
-type TFilter = Record<string, unknown>;
+import QueryBuilder from '../../builder/QueryBuilder';
 
 // CREATE
 const createSlotIntoDB = async (payload: TSlot) => {
@@ -52,9 +47,9 @@ const createSlotIntoDB = async (payload: TSlot) => {
 };
 
 // GET ALL
+/*
 const getAllSlotsFromDB = async (queryObj: TQueryObject) => {
   let filter: TFilter = { isBooked: { $ne: true } };
-  // console.log(filter);
 
   if (queryObj && queryObj.date && queryObj.roomId) {
     filter = {
@@ -78,6 +73,55 @@ const getAllSlotsFromDB = async (queryObj: TQueryObject) => {
   }
 
   return sortedResult;
+};
+*/
+
+const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
+  // Use an index signature to allow dynamic properties
+  let filter: { [key: string]: unknown } = { isBooked: { $ne: true } };
+
+  if (query && query.date && query.roomId) {
+    filter = {
+      ...filter, // Spread the existing filter properties
+      date: query.date,
+      room: query.roomId,
+    };
+  }
+
+  // Initialize the QueryBuilder with the Slot query
+  const slotQuery = new QueryBuilder(
+    Slot.find(filter).populate('room'),
+    query,
+  )
+    .search([]) // If you have searchable fields, pass them here
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  // Execute the query and get the results
+  const result = await slotQuery.modelQuery;
+
+  // Additional filtering to remove slots where the associated room is deleted
+  const sortedResult = result.filter(
+    (item) => !(item.room as any)?.isDeleted,
+  );
+
+  // Handle the case where there are no available slots
+  if (sortedResult.length <= 1) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'There are no available slots!',
+    );
+  }
+
+  // Get the total count of the results for pagination metadata
+  const meta = await slotQuery.countTotal();
+
+  return {
+    meta,
+    result: sortedResult,
+  };
 };
 
 export const SlotServices = {

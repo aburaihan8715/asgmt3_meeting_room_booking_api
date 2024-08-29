@@ -19,9 +19,9 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
 
 // GET ALL
 const getAllBookings = catchAsync(async (req: Request, res: Response) => {
-  const bookings = await BookingServices.getAllBookingsFromDB();
+  const result = await BookingServices.getAllBookingsFromDB(req.query);
 
-  if (!bookings || bookings.length < 1) {
+  if (!result || result?.result.length < 1) {
     return sendNotFoundDataResponse(res);
   }
 
@@ -29,24 +29,27 @@ const getAllBookings = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All bookings retrieved successfully!',
-    data: bookings,
+    meta: result.meta,
+    data: result.result,
   });
 });
 
 // GET MY BOOKINGS
 const getMyBookings = catchAsync(async (req: Request, res: Response) => {
-  const myBookings = await BookingServices.getMyBookingsFromDB(
+  const result = await BookingServices.getMyBookingsFromDB(
     req.user?.id,
+    req.query,
   );
 
-  if (!myBookings || myBookings.length < 1)
+  if (!result || result.result.length < 1)
     return sendNotFoundDataResponse(res);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User bookings retrieved successfully!',
-    data: myBookings,
+    meta: result.meta,
+    data: result.result,
   });
 });
 

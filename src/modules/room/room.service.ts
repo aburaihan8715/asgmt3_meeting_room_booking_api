@@ -2,6 +2,8 @@ import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { TRoom } from './room.interface';
 import { Room } from './room.model';
+import QueryBuilder from '../../builder/QueryBuilder';
+// import { roomSearchableFields } from './room.constant';
 
 // CREATE
 const createRoomIntoDB = async (payload: TRoom) => {
@@ -17,9 +19,24 @@ const createRoomIntoDB = async (payload: TRoom) => {
 };
 
 // GET ALL
-const getAllRoomsFromDB = async () => {
-  const result = await Room.find({ isDeleted: { $ne: true } });
-  return result;
+const getAllRoomsFromDB = async (query: Record<string, unknown>) => {
+  const roomQuery = new QueryBuilder(
+    Room.find({ isDeleted: { $ne: true } }),
+    query,
+  )
+    .search([])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await roomQuery.modelQuery;
+  const meta = await roomQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
 };
 
 // GET ONE

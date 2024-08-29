@@ -5,6 +5,7 @@ import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
 import { Slot } from '../slot/slot.model';
 import { User } from '../user/user.model';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 // CREATE
 const createBookingIntoDB = async (payload: TBooking) => {
@@ -27,29 +28,58 @@ const createBookingIntoDB = async (payload: TBooking) => {
 };
 
 // GET ALL
-const getAllBookingsFromDB = async () => {
-  const bookings = await Booking.find({ isDeleted: { $ne: true } })
-    .populate('room')
-    .populate('slots')
-    .populate('user')
-    .exec();
-  return bookings;
+const getAllBookingsFromDB = async (query: Record<string, unknown>) => {
+  const bookingQuery = new QueryBuilder(
+    Booking.find({ isDeleted: { $ne: true } })
+      .populate('room')
+      .populate('slots')
+      .populate('user'),
+    query,
+  )
+    .search([])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await bookingQuery.modelQuery;
+  const meta = await bookingQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
 };
 
 // GET MY BOOKINGS
-const getMyBookingsFromDB = async (id: string) => {
+const getMyBookingsFromDB = async (
+  id: string,
+  query: Record<string, unknown>,
+) => {
   const user = await User.findById(id);
 
   if (!user) throw new AppError(httpStatus.NOT_FOUND, 'User not found!');
 
-  const myBookings = await Booking.find(
-    { user: id, isDeleted: { $ne: true } },
-    { user: 0 },
+  const myBookingQuery = new QueryBuilder(
+    Booking.find({ user: id, isDeleted: { $ne: true } }, { user: 0 })
+      .populate('room')
+      .populate('slots'),
+    query,
   )
-    .populate('room')
-    .populate('slots');
 
-  return myBookings;
+    .search([])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await myBookingQuery.modelQuery;
+  const meta = await myBookingQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
 };
 
 // UPDATE
