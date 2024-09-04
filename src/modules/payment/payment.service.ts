@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
-// const stripe = new Stripe(`${process.env.PAYMENT_SECRET_KEY}`);
+import { TPayment } from './payment.interface';
+import { Payment } from './payment.model';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 // CREATE
@@ -17,8 +18,9 @@ const createPaymentIntentIntoStripe = async (payload: {
   return { clientSecret: paymentIntent.client_secret };
 };
 
-const createPaymentIntoDB = async () => {
-  return null;
+const createPaymentIntoDB = async (payload: TPayment) => {
+  const newPayment = await Payment.create(payload);
+  return newPayment;
 };
 
 export const PaymentServices = {

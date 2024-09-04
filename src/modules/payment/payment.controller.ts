@@ -18,7 +18,7 @@ const createPaymentIntent = catchAsync(async (req, res) => {
 });
 
 const createPayment = catchAsync(async (req, res) => {
-  const result = await PaymentServices.createPaymentIntoDB();
+  const result = await PaymentServices.createPaymentIntoDB(req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
