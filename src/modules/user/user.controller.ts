@@ -5,8 +5,8 @@ import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
 
 // SIGNUP
-const createUser = catchAsync(async (req: Request, res: Response) => {
-  const newUser = await UserServices.createUserIntoDB(req.body);
+const registerUser = catchAsync(async (req: Request, res: Response) => {
+  const newUser = await UserServices.registerUserIntoDB(req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -17,5 +17,5 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const UserControllers = {
-  createUser,
+  registerUser,
 };

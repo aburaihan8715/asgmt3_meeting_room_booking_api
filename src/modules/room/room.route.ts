@@ -14,6 +14,7 @@ router
     RoomControllers.createRoom,
   )
   .get(RoomControllers.getAllRooms);
+
 router
   .route('/:id')
   .get(RoomControllers.getRoom)

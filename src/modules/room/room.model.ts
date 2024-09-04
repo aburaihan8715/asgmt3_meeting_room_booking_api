@@ -24,7 +24,20 @@ const roomSchema = new Schema({
     type: Number,
     required: [true, 'Price per slot is required'],
   },
-  amenities: [String],
+
+  coverImage: {
+    type: String,
+    default: '',
+  },
+  images: {
+    type: [String],
+    default: [],
+  },
+  amenities: {
+    type: [String],
+    default: [],
+  },
+
   isDeleted: {
     type: Boolean,
     default: false,

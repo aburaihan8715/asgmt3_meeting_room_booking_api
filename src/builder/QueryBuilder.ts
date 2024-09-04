@@ -26,9 +26,7 @@ class QueryBuilder<T> {
   }
 
   filter() {
-    const queryObj = { ...this.query }; // copy
-
-    // Filtering
+    const queryObj = { ...this.query };
     const excludeFields = [
       'searchTerm',
       'sort',
@@ -36,10 +34,17 @@ class QueryBuilder<T> {
       'page',
       'fields',
     ];
-
     excludeFields.forEach((el) => delete queryObj[el]);
 
-    this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lte|lt)\b/g,
+      (match) => `$${match}`,
+    );
+
+    this.modelQuery = this.modelQuery.find(
+      JSON.parse(queryStr) as FilterQuery<T>,
+    );
 
     return this;
   }

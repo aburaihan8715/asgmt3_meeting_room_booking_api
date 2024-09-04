@@ -39,10 +39,13 @@ https://drive.google.com/file/d/1NHTDAZI51rnZPEL9EVzcvhm1U-x1Huhz/view?usp=shari
 
 ## API Endpoints
 
+## Auth:
+
+- /api/auth/login(POST) -public
+
 ## User:
 
-- /api/auth/signup(POST) -public
-- /api/auth/login(POST) -public
+- /api/user/register(POST) -public
 
 ## Room:
 
@@ -57,7 +60,7 @@ https://drive.google.com/file/d/1NHTDAZI51rnZPEL9EVzcvhm1U-x1Huhz/view?usp=shari
 - /api/slots(POST) -private for admin
 - /api/slots/availability(GET) -public
   OR
-- /api/slots/availability?date=2024-06-15&roomId=60d9c4e4f3b4(GET)
+- /api/slots/availability?date=2024-06-15&room=60d9c4e4f3b4(GET)
 
 ## Booking:
 

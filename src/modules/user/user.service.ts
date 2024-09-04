@@ -3,7 +3,7 @@ import AppError from '../../errors/AppError';
 import { IUser } from '../user/user.interface';
 import { User } from '../user/user.model';
 
-const createUserIntoDB = async (payload: IUser) => {
+const registerUserIntoDB = async (payload: IUser) => {
   let newUser = await User.create(payload);
 
   if (!newUser) {
@@ -19,5 +19,5 @@ const createUserIntoDB = async (payload: IUser) => {
 };
 
 export const UserServices = {
-  createUserIntoDB,
+  registerUserIntoDB,
 };

@@ -27,6 +27,10 @@
       "isWholeLine": false,
     },
   ],
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#b40332",
+    "statusBar.foreground": "#edeaf0",
+  },
   "cSpell.words": [
     "asgmt",
     "nodemon",
@@ -35,8 +39,4 @@
     "tseslint",
     "virtuals"
   ],
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#2403b4",
-    "statusBar.foreground": "#edeaf0",
-  }
 }

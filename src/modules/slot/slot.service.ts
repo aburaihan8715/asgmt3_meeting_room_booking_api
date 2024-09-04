@@ -11,6 +11,14 @@ import QueryBuilder from '../../builder/QueryBuilder';
 
 const createSlotIntoDB = async (payload: TSlot) => {
   const { room, date, startTime, endTime } = payload;
+
+  // check already exists
+  const slot = await Slot.findOne({ room, date });
+
+  if (slot) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'The slot already exists!');
+  }
+
   const slotDuration = 60;
   const statTimeInMinutes = timeStringToMinutes(startTime);
   const endTimeInMinutes = timeStringToMinutes(endTime);
@@ -64,10 +72,8 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
     Slot.find(filter).populate('room'),
     query,
   )
-    .search([]) // Add searchable fields if needed
     .filter()
     .sort()
-    .paginate()
     .fields();
 
   // Execute the query and get the results
@@ -87,10 +93,9 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   }
 
   // Get the total count of the results for pagination metadata
-  const meta = await slotQuery.countTotal();
+  // const meta = await slotQuery.countTotal();
 
   return {
-    meta,
     result: sortedResult,
   };
 };

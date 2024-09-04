@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Conference Room A",
+    "roomNo": 101,
+    "floorNo": 1,
+    "capacity": 50,
+    "pricePerSlot": 150,
+    "coverImage": "https://images.pexels.com/photos/2976970/pexels-photo-2976970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/2976970/pexels-photo-2976970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/416320/pexels-photo-416320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Projector", "Whiteboard", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Meeting Room B",
+    "roomNo": 102,
+    "floorNo": 1,
+    "capacity": 20,
+    "pricePerSlot": 100,
+    "coverImage": "https://images.pexels.com/photos/159213/hall-congress-architecture-building-159213.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/159213/hall-congress-architecture-building-159213.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/159806/meeting-modern-room-conference-159806.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Teleconferencing", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Executive Suite",
+    "roomNo": 201,
+    "floorNo": 2,
+    "capacity": 10,
+    "pricePerSlot": 200,
+    "coverImage": "https://images.pexels.com/photos/1181304/pexels-photo-1181304.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/1181304/pexels-photo-1181304.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/1181622/pexels-photo-1181622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Teleconferencing", "Mini-bar", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Training Room",
+    "roomNo": 103,
+    "floorNo": 1,
+    "capacity": 30,
+    "pricePerSlot": 120,
+    "coverImage": "https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/1181735/pexels-photo-1181735.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Projector", "Whiteboard", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Boardroom",
+    "roomNo": 301,
+    "floorNo": 3,
+    "capacity": 15,
+    "pricePerSlot": 180,
+    "coverImage": "https://images.pexels.com/photos/3782317/pexels-photo-3782317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/3782317/pexels-photo-3782317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/94825/pexels-photo-94825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Video Conferencing", "WiFi", "Phone"],
+    "isDeleted": false
+  },
+  {
+    "name": "Small Meeting Room",
+    "roomNo": 202,
+    "floorNo": 2,
+    "capacity": 8,
+    "pricePerSlot": 90,
+    "coverImage": "https://images.pexels.com/photos/1367272/pexels-photo-1367272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/1367272/pexels-photo-1367272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/1181370/pexels-photo-1181370.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Whiteboard", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Workshop Space",
+    "roomNo": 104,
+    "floorNo": 1,
+    "capacity": 40,
+    "pricePerSlot": 140,
+    "coverImage": "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/260689/pexels-photo-260689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Projector", "Sound System", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Event Hall",
+    "roomNo": 401,
+    "floorNo": 4,
+    "capacity": 100,
+    "pricePerSlot": 300,
+    "coverImage": "https://images.pexels.com/photos/1181734/pexels-photo-1181734.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/1181734/pexels-photo-1181734.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Stage", "Sound System", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Creative Studio",
+    "roomNo": 203,
+    "floorNo": 2,
+    "capacity": 12,
+    "pricePerSlot": 160,
+    "coverImage": "https://images.pexels.com/photos/1181394/pexels-photo-1181394.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/1181394/pexels-photo-1181394.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/1647919/pexels-photo-1647919.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["Projector", "Whiteboard", "WiFi"],
+    "isDeleted": false
+  },
+  {
+    "name": "Private Office",
+    "roomNo": 302,
+    "floorNo": 3,
+    "capacity": 5,
+    "pricePerSlot": 80,
+    "coverImage": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "images": [
+      "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/3182781/pexels-photo-3182781.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ],
+    "amenities": ["WiFi", "Phone"],
+    "isDeleted": false
+  }
+]

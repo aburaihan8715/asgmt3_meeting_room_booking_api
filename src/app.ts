@@ -22,12 +22,6 @@ app.get('/', (req: Request, res: Response) => {
 
 // ROUTES
 app.use('/api', router);
-// app.use('/api/users', UserRoutes);
-// app.use('/api/auth', AuthRoutes);
-// app.use('/api/rooms', RoomRoutes);
-// app.use('/api/slots', SlotRoutes);
-// app.use('/api/bookings', Routes.bookingRoutes);
-// app.use('/api/my-bookings', Routes.myBookingRoutes);
 
 // NOT FOUND ROUTE HANDLER
 app.use(notFoundRouteHandler);
