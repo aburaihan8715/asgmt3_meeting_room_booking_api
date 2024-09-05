@@ -10,10 +10,22 @@ import QueryBuilder from '../../builder/QueryBuilder';
 // CREATE
 const createBookingIntoDB = async (payload: TBooking) => {
   // 01 find the room
-  const room = await Room.findById(payload.room).exec();
+  const room = await Room.findById(payload.room);
   if (!room) throw new AppError(httpStatus.NOT_FOUND, 'Room not found!');
 
-  // 02 Calculate total amount based on pricePerSlot and number of slots
+  // 02 check already exists
+  const booking = await Booking.findOne({
+    room: room._id,
+    user: payload.user,
+    slots: payload.slots,
+    date: payload.date,
+  });
+
+  if (booking) {
+    throw new AppError(httpStatus.CONFLICT, 'The booking already exists!');
+  }
+
+  // 03 Calculate total amount based on pricePerSlot and number of slots
   const totalAmount = room.pricePerSlot * payload.slots.length;
 
   const result = await Booking.create({ ...payload, totalAmount });
@@ -21,8 +33,7 @@ const createBookingIntoDB = async (payload: TBooking) => {
   const populatedResult = await Booking.findById(result._id)
     .populate('room')
     .populate('slots')
-    .populate('user')
-    .exec();
+    .populate('user');
 
   return populatedResult;
 };
@@ -66,7 +77,6 @@ const getMyBookingsFromDB = async (
       .populate('slots'),
     query,
   )
-
     .search([])
     .filter()
     .sort()
