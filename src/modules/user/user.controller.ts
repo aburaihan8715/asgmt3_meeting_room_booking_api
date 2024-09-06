@@ -3,8 +3,9 @@ import catchAsync from '../../utils/catchAsync';
 import { UserServices } from './user.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
+import sendNotFoundDataResponse from '../../utils/sendNotFoundDataResponse';
 
-// SIGNUP
+// SIGNUP/CREATE USER
 const registerUser = catchAsync(async (req: Request, res: Response) => {
   const newUser = await UserServices.registerUserIntoDB(req.body);
 
@@ -16,6 +17,37 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// GET ALL USERS
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.getAllUsersFromDB(req.query);
+
+  if (!result || result?.result.length < 1) {
+    return sendNotFoundDataResponse(res);
+  }
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All users retrieved successfully!',
+    meta: result.meta,
+    data: result.result,
+  });
+});
+
+// MAKE ADMIN USER
+const makeAdmin = catchAsync(async (req: Request, res: Response) => {
+  const adminUser = await UserServices.makeAdminFromDB(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Making admin success!',
+    data: adminUser,
+  });
+});
+
 export const UserControllers = {
   registerUser,
+  getAllUsers,
+  makeAdmin,
 };

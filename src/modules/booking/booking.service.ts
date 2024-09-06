@@ -47,7 +47,6 @@ const getAllBookingsFromDB = async (query: Record<string, unknown>) => {
       .populate('user'),
     query,
   )
-    .search([])
     .filter()
     .sort()
     .paginate()

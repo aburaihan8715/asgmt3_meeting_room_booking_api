@@ -74,6 +74,7 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   )
     .filter()
     .sort()
+    .paginate()
     .fields();
 
   // Execute the query and get the results
@@ -93,10 +94,11 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   }
 
   // Get the total count of the results for pagination metadata
-  // const meta = await slotQuery.countTotal();
+  const meta = await slotQuery.countTotal();
 
   return {
     result: sortedResult,
+    meta,
   };
 };
 
