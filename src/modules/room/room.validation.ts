@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const createRoomValidationSchema = z.object({
   body: z.object({
-    name: z.string({ required_error: 'Room name is required' }).trim(),
+    roomName: z.string({ required_error: 'Room name is required' }).trim(),
     roomNo: z.number({ required_error: 'Room no is required' }).int(),
     floorNo: z.number({ required_error: 'Floor no is required' }).int(),
     capacity: z.number({ required_error: 'Capacity is required' }).int(),
@@ -17,7 +17,7 @@ const createRoomValidationSchema = z.object({
 });
 const updateRoomValidationSchema = z.object({
   body: z.object({
-    name: z.string().trim().optional(),
+    roomName: z.string().trim().optional(),
     roomNo: z.number().int().optional(),
     floorNo: z.number().int().optional(),
     capacity: z.number().int().optional(),

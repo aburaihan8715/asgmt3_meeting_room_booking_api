@@ -1,6 +1,6 @@
 [
   {
-    "name": "Conference Room A",
+    "roomName": "Conference Room A",
     "roomNo": 101,
     "floorNo": 1,
     "capacity": 50,
@@ -14,7 +14,7 @@
     "isDeleted": false
   },
   {
-    "name": "Meeting Room B",
+    "roomName": "Meeting Room B",
     "roomNo": 102,
     "floorNo": 1,
     "capacity": 20,
@@ -28,7 +28,7 @@
     "isDeleted": false
   },
   {
-    "name": "Executive Suite",
+    "roomName": "Executive Suite",
     "roomNo": 201,
     "floorNo": 2,
     "capacity": 10,
@@ -42,7 +42,7 @@
     "isDeleted": false
   },
   {
-    "name": "Training Room",
+    "roomName": "Training Room",
     "roomNo": 103,
     "floorNo": 1,
     "capacity": 30,
@@ -56,7 +56,7 @@
     "isDeleted": false
   },
   {
-    "name": "Boardroom",
+    "roomName": "Boardroom",
     "roomNo": 301,
     "floorNo": 3,
     "capacity": 15,
@@ -70,7 +70,7 @@
     "isDeleted": false
   },
   {
-    "name": "Small Meeting Room",
+    "roomName": "Small Meeting Room",
     "roomNo": 202,
     "floorNo": 2,
     "capacity": 8,
@@ -84,7 +84,7 @@
     "isDeleted": false
   },
   {
-    "name": "Workshop Space",
+    "roomName": "Workshop Space",
     "roomNo": 104,
     "floorNo": 1,
     "capacity": 40,
@@ -98,7 +98,7 @@
     "isDeleted": false
   },
   {
-    "name": "Event Hall",
+    "roomName": "Event Hall",
     "roomNo": 401,
     "floorNo": 4,
     "capacity": 100,
@@ -112,7 +112,7 @@
     "isDeleted": false
   },
   {
-    "name": "Creative Studio",
+    "roomName": "Creative Studio",
     "roomNo": 203,
     "floorNo": 2,
     "capacity": 12,
@@ -126,7 +126,7 @@
     "isDeleted": false
   },
   {
-    "name": "Private Office",
+    "roomName": "Private Office",
     "roomNo": 302,
     "floorNo": 3,
     "capacity": 5,

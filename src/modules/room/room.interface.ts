@@ -1,5 +1,5 @@
 export type TRoom = {
-  name: string;
+  roomName: string;
   roomNo: number;
   floorNo: number;
   capacity: number;

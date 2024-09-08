@@ -13,8 +13,8 @@ export interface IUser extends Document {
 }
 
 export interface UserModel extends Model<IUser> {
-  isUserExistsById(id: string): Promise<IUser>;
-  isUserExistsByEmail(email: string): Promise<IUser>;
+  getUserById(id: string): Promise<IUser>;
+  getUserByEmail(email: string): Promise<IUser>;
   isPasswordCorrect(
     plainTextPassword: string,
     hashedPassword: string,

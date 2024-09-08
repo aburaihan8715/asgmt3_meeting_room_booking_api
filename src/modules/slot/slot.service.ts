@@ -57,21 +57,12 @@ const createSlotIntoDB = async (payload: TSlot) => {
 
 // GET ALL
 const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
-  let filter: { [key: string]: unknown } = { isBooked: { $ne: true } };
-
-  if (query && query.date && query.room) {
-    filter = {
-      ...filter,
-      date: query.date,
-      room: query.room,
-    };
-  }
-
   // Initialize the QueryBuilder with the Slot query
   const slotQuery = new QueryBuilder(
-    Slot.find(filter).populate('room'),
+    Slot.find({ isBooked: { $ne: true } }).populate('room'),
     query,
   )
+    .search([])
     .filter()
     .sort()
     .paginate()
@@ -80,7 +71,6 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   // Execute the query and get the results
   const result = await slotQuery.modelQuery;
 
-  // Additional filtering to remove slots where the associated room is deleted
   const sortedResult = result.filter(
     (item) => !(item.room as any)?.isDeleted,
   );

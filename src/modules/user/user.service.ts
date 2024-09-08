@@ -21,11 +21,7 @@ const registerUserIntoDB = async (payload: IUser) => {
 
 // GET ALL
 const getAllUsersFromDB = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(
-    User.find({}),
-
-    query,
-  )
+  const userQuery = new QueryBuilder(User.find({}), query)
     .search(['name'])
     .filter()
     .sort()

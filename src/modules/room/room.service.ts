@@ -24,7 +24,7 @@ const getAllRoomsFromDB = async (query: Record<string, unknown>) => {
     Room.find({ isDeleted: { $ne: true } }),
     query,
   )
-    .search(['name'])
+    .search(['roomName'])
     .filter()
     .sort()
     .paginate()

@@ -29,9 +29,9 @@ const auth = (...requiredRoles: TUserRole[]) => {
       const { role, id } = decoded;
 
       // 03 check user still exists
-      const user = await User.isUserExistsById(id);
-      if (!user) return sendUnauthenticatedResponse(res);
+      const user = await User.getUserById(id);
 
+      if (!user) return sendUnauthenticatedResponse(res);
       // 04 check authorization if needed
       if (requiredRoles && !requiredRoles.includes(role)) {
         return sendUnauthenticatedResponse(res);

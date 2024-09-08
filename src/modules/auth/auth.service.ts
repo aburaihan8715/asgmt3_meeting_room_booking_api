@@ -7,7 +7,7 @@ import { createToken } from './auth.utils';
 
 const loginFromDB = async (payload: TLogin) => {
   // 01. checking if the user is exist
-  let user = await User.isUserExistsByEmail(payload.email);
+  let user = await User.getUserByEmail(payload.email);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');

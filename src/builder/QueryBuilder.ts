@@ -58,11 +58,13 @@ class QueryBuilder<T> {
   }
 
   paginate() {
-    const page = Number(this?.query?.page) || 1;
-    const limit = Number(this?.query?.limit) || 10;
-    const skip = (page - 1) * limit;
+    const limit = this.query?.limit ? Number(this.query.limit) : null;
 
-    this.modelQuery = this.modelQuery.skip(skip).limit(limit);
+    if (limit) {
+      const page = Number(this.query?.page) || 1;
+      const skip = (page - 1) * limit;
+      this.modelQuery = this.modelQuery.skip(skip).limit(limit);
+    }
 
     return this;
   }
@@ -79,8 +81,9 @@ class QueryBuilder<T> {
     const totalQueries = this.modelQuery.getFilter();
     const total = await this.modelQuery.model.countDocuments(totalQueries);
     const page = Number(this?.query?.page) || 1;
-    const limit = Number(this?.query?.limit) || 10;
-    const totalPage = Math.ceil(total / limit);
+    const limit = this?.query?.limit ? Number(this.query.limit) : total;
+
+    const totalPage = limit > 0 ? Math.ceil(total / limit) : 1;
 
     return {
       page,
