@@ -10,13 +10,14 @@ const createSlotValidationSchema = z.object({
       date: z
         .string()
         .regex(dateRegex, { message: 'Invalid date format (YYYY-MM-DD)' }),
-      startTime: z
-        .string()
-        .regex(timeRegex, { message: 'Invalid start time format (HH:MM)' }),
+      startTime: z.string().regex(timeRegex, {
+        message: 'Invalid start time format (HH:MM)',
+      }),
       endTime: z
         .string()
         .regex(timeRegex, { message: 'Invalid end time format (HH:MM)' }),
       isBooked: z.boolean().optional(),
+      isDeleted: z.boolean().optional(),
     })
     .refine(
       (body) => {
@@ -30,6 +31,40 @@ const createSlotValidationSchema = z.object({
     ),
 });
 
+const updateSlotValidationSchema = z.object({
+  body: z
+    .object({
+      room: z.string({ required_error: 'Room ID is required' }).optional(),
+      date: z
+        .string()
+        .regex(dateRegex, { message: 'Invalid date format (YYYY-MM-DD)' })
+        .optional(),
+      startTime: z
+        .string()
+        .regex(timeRegex, { message: 'Invalid start time format (HH:MM)' })
+        .optional(),
+      endTime: z
+        .string()
+        .regex(timeRegex, { message: 'Invalid end time format (HH:MM)' })
+        .optional(),
+      isBooked: z.boolean().optional(),
+      isDeleted: z.boolean().optional(),
+    })
+    .refine(
+      (body) => {
+        if (!body.startTime || !body.endTime) return true;
+        const startTime = new Date(`1970-01-01T${body.startTime}:00`);
+        const endTime = new Date(`1970-01-01T${body.endTime}:00`);
+        return endTime > startTime;
+      },
+      {
+        message: 'Start time should be before End time!',
+        path: ['endTime'],
+      },
+    ),
+});
+
 export const SlotValidations = {
   createSlotValidationSchema,
+  updateSlotValidationSchema,
 };

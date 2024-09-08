@@ -33,7 +33,49 @@ const getAllSlots = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// GET ONE
+const getSlot = catchAsync(async (req: Request, res: Response) => {
+  const room = await SlotServices.getSlotFromDB(req.params.id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Slot retrieved successfully!',
+    data: room,
+  });
+});
+
+// UPDATE ONE
+const updateSlot = catchAsync(async (req: Request, res: Response) => {
+  const updatedRoom = await SlotServices.updateSlotIntoDB(
+    req.params.id,
+    req.body,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Slot updated successfully!',
+    data: updatedRoom,
+  });
+});
+
+// DELETE ONE
+const deleteSlot = catchAsync(async (req: Request, res: Response) => {
+  const deletedRoom = await SlotServices.deleteSlotFromDB(req.params.id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Slot deleted successfully!',
+    data: deletedRoom,
+  });
+});
+
 export const SlotControllers = {
   createSlot,
   getAllSlots,
+  deleteSlot,
+  getSlot,
+  updateSlot,
 };

@@ -59,7 +59,10 @@ const createSlotIntoDB = async (payload: TSlot) => {
 const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   // Initialize the QueryBuilder with the Slot query
   const slotQuery = new QueryBuilder(
-    Slot.find({ isBooked: { $ne: true } }).populate('room'),
+    Slot.find({
+      isBooked: { $ne: true },
+      isDeleted: { $ne: true },
+    }).populate('room'),
     query,
   )
     .search([])
@@ -92,7 +95,64 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
+// GET ONE
+const getSlotFromDB = async (id: string) => {
+  const result = await Slot.findById(id).populate('room');
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Slot not found !');
+  }
+
+  if (result && result.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Slot has been deleted!');
+  }
+
+  if (result && result.isBooked) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Slot already booked!');
+  }
+  return result;
+};
+
+// UPDATE ONE
+const updateSlotIntoDB = async (id: string, payload: Partial<TSlot>) => {
+  const result = await Slot.findByIdAndUpdate(
+    id,
+    { ...payload },
+    { new: true },
+  );
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Slot not found !');
+  }
+
+  if (result && result.isBooked) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Slot already booked!');
+  }
+  if (result && result.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Slot already deleted!');
+  }
+  return result;
+};
+
+// DELETE ONE
+const deleteSlotFromDB = async (id: string) => {
+  const result = await Slot.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true },
+  );
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Slot not found !');
+  }
+
+  return result;
+};
+
 export const SlotServices = {
   createSlotIntoDB,
   getAllSlotsFromDB,
+  deleteSlotFromDB,
+  updateSlotIntoDB,
+  getSlotFromDB,
 };
