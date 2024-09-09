@@ -8,4 +8,5 @@ export type TRoom = {
   images: string[];
   coverImage: string;
   isDeleted: boolean;
+  isBooked: boolean;
 };

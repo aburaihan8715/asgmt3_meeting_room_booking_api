@@ -9,11 +9,11 @@ import QueryBuilder from '../../builder/QueryBuilder';
 
 // CREATE
 const createBookingIntoDB = async (payload: TBooking) => {
-  // 01 find the room
+  // 01 Find the room
   const room = await Room.findById(payload.room);
   if (!room) throw new AppError(httpStatus.NOT_FOUND, 'Room not found!');
 
-  // 02 check already exists
+  // 02 Check if the booking already exists
   const booking = await Booking.findOne({
     room: room._id,
     user: payload.user,
@@ -28,8 +28,21 @@ const createBookingIntoDB = async (payload: TBooking) => {
   // 03 Calculate total amount based on pricePerSlot and number of slots
   const totalAmount = room.pricePerSlot * payload.slots.length;
 
+  // 04 Create the booking
   const result = await Booking.create({ ...payload, totalAmount });
 
+  // 05 Update the room and slots to set `isBooked` to true
+  // 05.1 Update room `isBooked` status
+  room.isBooked = true;
+  await room.save();
+
+  // 05.2 Update the slots `isBooked` status
+  await Slot.updateMany(
+    { _id: { $in: payload.slots } }, // Find the slots in the payload
+    { $set: { isBooked: true } }, // Set `isBooked` to true
+  );
+
+  // 06 Populate and return the result
   const populatedResult = await Booking.findById(result._id)
     .populate('room')
     .populate('slots')

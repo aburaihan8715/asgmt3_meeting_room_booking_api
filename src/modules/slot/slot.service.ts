@@ -8,7 +8,6 @@ import { minutesToTimeString, timeStringToMinutes } from './slot.utils';
 import QueryBuilder from '../../builder/QueryBuilder';
 
 // CREATE
-
 const createSlotIntoDB = async (payload: TSlot) => {
   const { room, date, startTime, endTime } = payload;
 
@@ -118,7 +117,7 @@ const updateSlotIntoDB = async (id: string, payload: Partial<TSlot>) => {
   const result = await Slot.findByIdAndUpdate(
     id,
     { ...payload },
-    { new: true },
+    { new: true, runValidators: true },
   );
 
   if (!result) {

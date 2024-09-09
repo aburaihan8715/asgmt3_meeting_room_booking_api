@@ -13,6 +13,7 @@ const createRoomValidationSchema = z.object({
     images: z.array(z.string()).optional(),
     coverImage: z.string().optional(),
     isDeleted: z.boolean().optional(),
+    isBooked: z.boolean().optional(),
   }),
 });
 const updateRoomValidationSchema = z.object({
@@ -26,6 +27,7 @@ const updateRoomValidationSchema = z.object({
     images: z.array(z.string()).optional(),
     coverImage: z.string().optional(),
     isDeleted: z.boolean().optional(),
+    isBooked: z.boolean().optional(),
   }),
 });
 
