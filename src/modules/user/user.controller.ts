@@ -36,7 +36,8 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 
 // MAKE ADMIN USER
 const makeAdmin = catchAsync(async (req: Request, res: Response) => {
-  const adminUser = await UserServices.makeAdminFromDB(req.body);
+  const id = req.body._id;
+  const adminUser = await UserServices.makeAdminFromDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

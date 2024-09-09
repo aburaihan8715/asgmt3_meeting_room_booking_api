@@ -13,11 +13,13 @@ router.post(
   validateRequest(UserValidations.registerValidationSchema),
   UserControllers.registerUser,
 );
+
+router.get('/', auth(USER_ROLE.admin), UserControllers.getAllUsers);
+
 router.patch(
   '/make-admin',
   auth(USER_ROLE.admin),
   UserControllers.makeAdmin,
 );
-router.get('/', auth(USER_ROLE.admin), UserControllers.getAllUsers);
 
 export const UserRoutes = router;

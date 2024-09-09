@@ -91,8 +91,25 @@ const getMyBookingsFromDB = async (
   };
 };
 
-// UPDATE
-const updateBookingInDB = async (
+// GET ONE
+const getBookingFromDB = async (id: string) => {
+  const result = await Booking.findById(id);
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Booking not found !');
+  }
+
+  if (result && result.isDeleted) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Booking has been deleted!',
+    );
+  }
+  return result;
+};
+
+// UPDATE CONFIRM
+const updateBookingConfirmIntoDB = async (
   id: string,
   payload: Partial<TBooking>,
 ) => {
@@ -140,6 +157,7 @@ export const BookingServices = {
   createBookingIntoDB,
   getAllBookingsFromDB,
   getMyBookingsFromDB,
-  updateBookingInDB,
   deleteBookingFromDB,
+  updateBookingConfirmIntoDB,
+  getBookingFromDB,
 };

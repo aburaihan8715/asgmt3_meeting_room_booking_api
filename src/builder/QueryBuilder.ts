@@ -21,7 +21,6 @@ class QueryBuilder<T> {
         ),
       });
     }
-
     return this;
   }
 
@@ -45,7 +44,6 @@ class QueryBuilder<T> {
     this.modelQuery = this.modelQuery.find(
       JSON.parse(queryStr) as FilterQuery<T>,
     );
-
     return this;
   }
 

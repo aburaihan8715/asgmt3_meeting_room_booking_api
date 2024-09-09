@@ -26,12 +26,13 @@ bookingRoutes
 
 bookingRoutes
   .route('/:id')
-  .put(
+  .patch(
     auth(USER_ROLE.admin),
     validateRequest(BookingValidations.updateBookingValidationSchema),
-    BookingControllers.updateBooking,
+    BookingControllers.updateBookingConfirm,
   )
-  .delete(auth(USER_ROLE.admin), BookingControllers.deleteBooking);
+  .delete(auth(USER_ROLE.admin), BookingControllers.deleteBooking)
+  .get(auth(USER_ROLE.admin), BookingControllers.getBooking);
 
 export const Routes = {
   bookingRoutes,
