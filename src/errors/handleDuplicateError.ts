@@ -5,7 +5,9 @@ interface IDuplicateError extends Error {
   keyValue?: Record<string, string>;
 }
 
-const handleDuplicateError = (err: IDuplicateError): TGenericErrorResponse => {
+const handleDuplicateError = (
+  err: IDuplicateError,
+): TGenericErrorResponse => {
   const message = err.message || 'Duplicate key error';
   const statusCode = 400;
   const errorMessages: TErrorSources = [
