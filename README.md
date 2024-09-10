@@ -83,20 +83,3 @@ https://drive.google.com/file/d/1NHTDAZI51rnZPEL9EVzcvhm1U-x1Huhz/view?usp=shari
 ```
 
 <p>======end=======</p>
-
-"devDependencies": {
-"@eslint/js": "^9.4.0",
-"@types/cookie-parser": "^1.4.7",
-"@types/cors": "^2.8.17",
-"@types/express": "^4.17.21",
-"@types/node": "^20.14.2",
-"@typescript-eslint/eslint-plugin": "^7.13.0",
-"@typescript-eslint/parser": "^7.13.0",
-"eslint": "^9.4.0",
-"eslint-config-prettier": "^9.1.0",
-"globals": "^15.4.0",
-"prettier": "^3.3.2",
-"ts-node-dev": "^2.0.0",
-"typescript": "^5.4.5",
-"typescript-eslint": "^7.13.0"
-}
