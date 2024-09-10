@@ -17,7 +17,6 @@ app.use(
   cors({
     origin: [
       'https://meeting-room-booking-client.netlify.app',
-      'https://meeting-room-booking-sepia.vercel.app',
       'http://localhost:5173',
     ],
     credentials: true,
