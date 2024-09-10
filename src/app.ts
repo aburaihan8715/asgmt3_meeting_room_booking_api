@@ -13,7 +13,15 @@ const app = express();
 // GLOBAL MIDDLEWARES
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://meeting-room-booking-sepia.vercel.app',
+    ],
+    credentials: true,
+  }),
+);
 
 // HOME ROUTE
 app.get('/', (req: Request, res: Response) => {
