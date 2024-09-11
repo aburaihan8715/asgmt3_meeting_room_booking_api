@@ -94,7 +94,7 @@ Git link client: https://github.com/aburaihan8715/asgmt5_meeting_room_booking_cl
 Live link server: https://meeting-room-booking-sepia.vercel.app
 Git link server: https://github.com/aburaihan8715/asgmt3_meeting_room_booking_api
 
-Overview video link: https://drive.google.com/file/d/1A5n_xxlednlUpT23j9LRVMOmHfEJ5lMQ/view?usp=sharing
+Overview video link client: https://drive.google.com/file/d/1A5n_xxlednlUpT23j9LRVMOmHfEJ5lMQ/view?usp=sharing
 
 User credentials:
 email:user@gmail.com
