@@ -2,7 +2,7 @@
 
 ## Live link:
 
-https://meeting-room-booking-sepia.vercel.app/
+https://meeting-room-booking-sepia.vercel.app
 
 ## Github link:
 
@@ -14,13 +14,13 @@ https://drive.google.com/file/d/1NHTDAZI51rnZPEL9EVzcvhm1U-x1Huhz/view?usp=shari
 
 ## Admin
 
-- email: web@programming-hero.com
-- password: ph-password
+- email: admin@gmail.com
+- password: test1234
 
 ## User
 
-- email: simple@gmail.com
-- password: ph-password
+- email: user@gmail.com
+- password: test1234
 
 ## Technologies used:
 
@@ -36,6 +36,7 @@ https://drive.google.com/file/d/1NHTDAZI51rnZPEL9EVzcvhm1U-x1Huhz/view?usp=shari
 3. zod
 4. jwt
 5. eslint
+6. stripe
 
 ## API Endpoints
 
@@ -45,30 +46,31 @@ https://drive.google.com/file/d/1NHTDAZI51rnZPEL9EVzcvhm1U-x1Huhz/view?usp=shari
 
 ## User:
 
-- /api/user/register(POST) -public
+- /api/users/register(POST) -public
+- /api/users/make-admin(PATCH) -admin
 
 ## Room:
 
-- /api/rooms(POST) -private for admin
+- /api/rooms(POST) -admin
 - /api/rooms(GET) -public
-- /api/rooms/:id(GET) -public
-- /api/rooms/:id(PUT) -private for admin
-- /api/rooms/:id(DELETE) -private for admin
+- /api/rooms/:id(GET) -user
+- /api/rooms/:id(PUT) -admin
+- /api/rooms/:id(DELETE) -admin
 
 ## Slot:
 
-- /api/slots(POST) -private for admin
+- /api/slots(POST) -admin
 - /api/slots/availability(GET) -public
   OR
 - /api/slots/availability?date=2024-06-15&room=60d9c4e4f3b4(GET)
 
 ## Booking:
 
-- /api/bookings (POST) -private for logged in users
-- /api/bookings (GET) -public
-- /api/my-bookings(GET) -private for logged in users
-- /api/bookings/:id (PUT) -private for admin
-- /api/bookings/:id (DELETE) -private for admin
+- /api/bookings (POST) -user
+- /api/bookings (GET) -admin
+- /api/my-bookings(GET) -user
+- /api/bookings/:id (PUT) -admin
+- /api/bookings/:id (DELETE) -admin
 
 ## Scripts
 
