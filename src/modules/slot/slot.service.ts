@@ -86,7 +86,7 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   }
 
   // Get the total count of the results for pagination metadata
-  const meta = await slotQuery.countTotal();
+  const meta = await slotQuery.calculatePaginate();
 
   return {
     result: sortedResult,

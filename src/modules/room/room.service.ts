@@ -31,7 +31,7 @@ const getAllRoomsFromDB = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await roomQuery.modelQuery;
-  const meta = await roomQuery.countTotal();
+  const meta = await roomQuery.calculatePaginate();
 
   return {
     meta,

@@ -29,7 +29,7 @@ const getAllUsersFromDB = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await userQuery.modelQuery;
-  const meta = await userQuery.countTotal();
+  const meta = await userQuery.calculatePaginate();
 
   return {
     meta,

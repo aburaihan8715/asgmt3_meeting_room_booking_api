@@ -66,7 +66,7 @@ const getAllBookingsFromDB = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await bookingQuery.modelQuery;
-  const meta = await bookingQuery.countTotal();
+  const meta = await bookingQuery.calculatePaginate();
 
   return {
     meta,
@@ -96,7 +96,7 @@ const getMyBookingsFromDB = async (
     .fields();
 
   const result = await myBookingQuery.modelQuery;
-  const meta = await myBookingQuery.countTotal();
+  const meta = await myBookingQuery.calculatePaginate();
 
   return {
     meta,
